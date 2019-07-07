@@ -1,23 +1,31 @@
 <div class="jumbotron text-center">
     <h1 class="display-4 text-uppercase">Buzzfeed Scraper</h1>
-    <a class="btn btn-primary btn-lg" href="#" role="button">Scrape New Articles</a>
-    <a class="btn btn-primary btn-lg" href="#" role="button">Clear Articles</a>
+    <a class="btn btn-primary btn-lg" href="#" role="button" id="scrape-new">Scrape New Articles</a>
+    <a class="btn btn-primary btn-lg" href="#" role="button" id="clear-articles">Clear Articles</a>
 </div>
 
 
 {{#each stories}}
 <div class="card mb-3">
     <div class="row no-gutters">
+        {{#if this.image}}
         <div class="col-md-4">
             <img src="{{this.image}}" class="card-img" alt="Article Image">
         </div>
+        {{/if}}
         <div class="col-md-8">
             <div class="card-body">
                 <a href="{{link}}" class="text-body" target="_blank"><h5 class="card-title">{{this.headline}}</h5></a>
+                {{#if this.summary}}
                 <p class="card-text">{{this.summary}}</p>
-                <a href="#" class="btn btn-warning">Save Story</a>
+                {{/if}}
+                <a href="#" class="btn btn-warning saveStory">Save Story</a>
             </div>
         </div>
     </div>
 </div>
 {{/each}}
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="./js/homepage.js"></script>

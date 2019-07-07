@@ -10,7 +10,7 @@ var SavedSchema = new Schema({
     },
     summary: {
         type: String,
-        required: true
+        required: false
     },
     link: {
         type: String,
@@ -18,7 +18,7 @@ var SavedSchema = new Schema({
     },
     image: {
         type: String,
-        required: true,
+        required: false,
         trim: true
     }
 })

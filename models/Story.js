@@ -10,7 +10,7 @@ var StorySchema = new Schema({
     },
     summary: {
         type: String,
-        required: true
+        required: false
     },
     link: {
         type: String,
@@ -18,8 +18,12 @@ var StorySchema = new Schema({
     },
     image: {
         type: String,
-        required: true,
+        required: false,
         trim: true
+    },
+    saved: {
+        type: Boolean,
+        default: false
     }
 })
 
