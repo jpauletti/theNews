@@ -1,5 +1,6 @@
 var db = require("../models");
 var axios = require("axios");
+var cheerio = require("cheerio");
 
 module.exports = function (app) {
     app.get("/api/stories", function (req, res) {
@@ -21,6 +22,7 @@ module.exports = function (app) {
         })
     })
 
+    // new scrape call
     app.get("/api/new-scrape", function(req, res) {
 
         // scrape site
@@ -42,9 +44,9 @@ module.exports = function (app) {
                     var update = {};
                     var options = { upsert: true, new: true, setDefaultsOnInsert: true };
                     db.Story.find({ summary: result.summary }).then(function (dbFind) {
-                        console.log(dbFind);
-                        console.log(dbFind.length);
-                        console.log("did i find it?");
+                        // console.log(dbFind);
+                        // console.log(dbFind.length);
+                        // console.log("did i find it?");
                         if (dbFind.length === 0) {
                             db.Story.findOneAndUpdate(query, update, options, function (err, data) {
                                 if (err) console.log(err);
@@ -59,11 +61,19 @@ module.exports = function (app) {
                     });
                 }
             })
-        })
-
-
-        res.redirect("/");
+        }).then(function() {
+            res.redirect("/");
+        });
     })
+
+
+    // clear stories call
+    app.get("/clear", function(req, res) {
+        db.Story.deleteMany({}, function (err) {
+            res.redirect("/");
+        });
+    })
+
 
     // save a story
     app.post("/api/save", function(req, res) {

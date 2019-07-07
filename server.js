@@ -91,9 +91,9 @@ axios.get("https://www.buzzfeed.com/").then(function(response) {
             var update = {};
             var options = { upsert: true, new: true, setDefaultsOnInsert: true };
             db.Story.find({ summary: result.summary }).then(function (dbFind) {
-                console.log(dbFind);
-                console.log(dbFind.length);
-                console.log("did i find it?");
+                // console.log(dbFind);
+                // console.log(dbFind.length);
+                // console.log("did i find it?");
                 if (dbFind.length === 0) {
                     db.Story.findOneAndUpdate(query, update, options, function (err, data) {
                         if (err) console.log(err);
