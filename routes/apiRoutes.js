@@ -89,6 +89,20 @@ module.exports = function (app) {
     })
 
 
+    // remove a saved story
+    app.post("/api/unsave", function (req, res) {
+        var summary = req.body.summary;
+        console.log(summary);
+        // find all info about story
+        db.Story.findOneAndUpdate({ summary: summary }, { saved: false }).then(function (dbStory) {
+            console.log("saved value updated");
+            res.json(true);
+        }).catch(function (err) {
+            if (err) console.log(err);
+        })
+    })
+
+
 
     // view notes about a story
     app.get("/api/notes/:id", function(req, res) {

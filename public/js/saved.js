@@ -3,6 +3,17 @@ var seeNotes = $(".seeNotes");
 
 removeFromSaved.on("click", function(event) {
     console.log("remove")
+    event.preventDefault();
+
+    var summary = $(this).prev().text();
+    console.log(summary);
+
+    // send summary for the story to be updated
+    $.post("/api/unsave", { summary: summary }, function (data) {
+        console.log(data);
+        // refesh page
+        window.location.reload();
+    })
 })
 
 
