@@ -1,3 +1,10 @@
+<div class="jumbotron text-center">
+    <h1 class="display-4 text-uppercase">Buzzfeed Scraper</h1>
+    <a class="btn btn-primary btn-lg" href="#" role="button">Scrape New Articles</a>
+    <a class="btn btn-primary btn-lg" href="#" role="button">Clear Articles</a>
+</div>
+
+
 {{#each stories}}
 <div class="card mb-3">
     <div class="row no-gutters">
@@ -6,9 +13,9 @@
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title">{{this.headline}}</h5>
+                <a href="{{link}}" class="text-body" target="_blank"><h5 class="card-title">{{this.headline}}</h5></a>
                 <p class="card-text">{{this.summary}}</p>
-                <a href="{{link}}" target="_blank" class="btn btn-primary">Link</a>
+                <a href="#" class="btn btn-warning">Save Story</a>
             </div>
         </div>
     </div>

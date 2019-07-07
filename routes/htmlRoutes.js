@@ -12,6 +12,11 @@ module.exports = function(app) {
     })
 
     app.get("/saved", function (req, res) {
-        res.render("saved");
+        db.Saved.find({}).then(function (dbSaved) {
+            console.log(dbSaved);
+            res.render("saved", { saved: dbSaved });
+        }).catch(function (err) {
+            res.json(err);
+        })
     })
 }

@@ -2,4 +2,5 @@
 
 module.exports = {
     Story: require("./Story"),
+    Saved: require("./Saved")
 };

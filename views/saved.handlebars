@@ -1,1 +1,23 @@
-<h1>Saved</h1>
+<div class="jumbotron text-center">
+    <h1 class="display-4 text-uppercase">Saved Stories</h1>
+    <a class="btn btn-primary btn-lg" href="#" role="button">Scrape New Articles</a>
+    <a class="btn btn-primary btn-lg" href="#" role="button">Clear Articles</a>
+</div>
+
+
+{{#each saved}}
+<div class="card mb-3">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src="{{this.image}}" class="card-img" alt="Article Image">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{this.headline}}</h5>
+                <p class="card-text">{{this.summary}}</p>
+                <a href="{{link}}" target="_blank" class="btn btn-primary">Link</a>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}
