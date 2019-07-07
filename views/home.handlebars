@@ -1,8 +1,16 @@
-<h1>Home</h1>
-
 {{#each stories}}
-<h3>{{this.headline}}</h3>
-<p>{{this.summary}}</p>
-<a href="{{this.link}}">Link here</a>
-<div class="story-image" style="background: {{this.image}};'");></div>
+<div class="card mb-3">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src="{{this.image}}" class="card-img" alt="Article Image">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{this.headline}}</h5>
+                <p class="card-text">{{this.summary}}</p>
+                <a href="{{link}}" target="_blank" class="btn btn-primary">Link</a>
+            </div>
+        </div>
+    </div>
+</div>
 {{/each}}
