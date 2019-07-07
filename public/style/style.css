@@ -5,3 +5,15 @@
 .jumbotron {
     border-radius: 0;
 }
+
+ul {
+    list-style-type: none;
+    text-align: left;
+    padding-left: 0;
+}
+
+li {
+    border: 1px dashed black;
+    padding: 5px;
+    margin-bottom: 3px;
+}

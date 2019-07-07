@@ -23,7 +23,12 @@ var StorySchema = new Schema({
     },
     saved: {
         type: Boolean,
+        required: true,
         default: false
+    },
+    notes: {
+        type: Array,
+        required: false
     }
 })
 

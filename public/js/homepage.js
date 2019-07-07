@@ -7,7 +7,7 @@ scrapeNew.on("click", function(event) {
     event.preventDefault();
 
     // get request for new scrape
-    $.get("/api/new-scrape", function(data) {
+    $.get("/api/new-scrape", function (data) {
         console.log("new scrape performed");
         window.location.replace("/");
     })

@@ -65,6 +65,7 @@ module.exports = function (app) {
         res.redirect("/");
     })
 
+    // save a story
     app.post("/api/save", function(req, res) {
         var summary = req.body.summary;
         console.log(summary);
@@ -73,6 +74,34 @@ module.exports = function (app) {
             console.log("saved value updated");
             res.json(true);
         }).catch(function(err) {
+            if (err) console.log(err);
+        })
+    })
+
+
+
+    // view notes about a story
+    app.get("/api/notes/:id", function(req, res) {
+        var id = req.params.id;
+
+        db.Story.findOne({_id: req.params.id}).then(function(dbStory) {
+            console.log(dbStory);
+            res.send(dbStory.notes);
+        }).catch(function(err) {
+            if (err) console.log(err);
+        })
+    })
+
+
+    // save a note
+    app.post("/api/savenote/:id", function(req, res) {
+        var note = req.body.newNote;
+
+        // add note to story
+        db.Story.findOneAndUpdate({ _id: req.params.id }, { $push: { notes: note }}).then(function (dbStory) {
+            console.log("saved new note");
+            res.json(true);
+        }).catch(function (err) {
             if (err) console.log(err);
         })
     })
