@@ -33,13 +33,13 @@ module.exports = function (app) {
             $('div[data-module="story-card"]').each(function (i, element) {
                 var result = {};
 
-                result.image = $(this).find(".card__image").css("background-image").split("'")[1];
+                result.image = $(this).find(".card__image img").attr("src");
                 result.headline = $(this).find(".js-card__link.link-gray").text();
                 result.summary = $(this).find(".js-card__description").text();
                 result.link = $(this).find(".js-card__link").attr("href");
 
                 // if it doesn't already exist, create it (if no fields are null)
-                if (result.image && result.image !== "data:image/gif" && result.headline && result.summary && result.link) {
+                if (result.image && (result.image).indexOf("data:image/gif") === -1 && result.headline && result.summary && result.link) {
                     var query = result;
                     var update = {};
                     var options = { upsert: true, new: true, setDefaultsOnInsert: true };
@@ -126,6 +126,22 @@ module.exports = function (app) {
             console.log("saved new note");
             res.json(true);
         }).catch(function (err) {
+            if (err) console.log(err);
+        })
+    })
+
+
+    // delete a note
+    app.post("/api/notes", function(req, res) {
+        var storyId = req.body.storyId;
+        var noteId = req.body.noteId;
+        var noteContent = req.body.noteContent;
+
+        // delete from db
+        db.Story.findOneAndUpdate({ _id: storyId }, { $pullAll: { notes: [noteContent] } }).then(function(dbStory) {
+            console.log("deleted a note");
+            res.json(true);
+        }).catch(function(err) {
             if (err) console.log(err);
         })
     })

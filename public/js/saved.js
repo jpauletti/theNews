@@ -1,6 +1,8 @@
 var removeFromSaved = $(".removeFromSaved");
 var seeNotes = $(".seeNotes");
+var deleteNote = $(".delete");
 
+// remove from saved stories
 removeFromSaved.on("click", function(event) {
     console.log("remove")
     event.preventDefault();
@@ -16,10 +18,11 @@ removeFromSaved.on("click", function(event) {
     })
 })
 
-
+// view notes
 seeNotes.on("click", function (event) {
     var title = $(this).prev().prev().prev().text().trim();
-    var id = $(this).parent().parent().parent().parent().data("id");
+    var id = $(this).parent().parent().parent().parent().data("story-id");
+    // var storyId = $(this).parent().parent().parent().parent().data("story-id");
 
     // get notes for this story
     $.get("/api/notes/" + id, function (data) {
@@ -32,7 +35,7 @@ seeNotes.on("click", function (event) {
             // display them as <li>s
             var notesString = "";
             for (var i = 0; i < notes.length; i++) {
-                notesString += "<li>" + notes[i] + "</li>";
+                notesString += "<li>" + notes[i] + '<i class="fas fa-times text-danger delete" data-note-id="' + i + '"></i>' + "</li>";
             }
         }
 
@@ -42,7 +45,7 @@ seeNotes.on("click", function (event) {
             html:
                 'Story: ' + title +
                 '<br><br>' +
-                '<ul>' +
+                '<ul data-story-id="' + id + '">' +
                 notesString +
                 '</ul>',
             input: 'text',
@@ -53,25 +56,9 @@ seeNotes.on("click", function (event) {
             showCloseButton: true,
             showCancelButton: true,
             confirmButtonText: 'Save Note',
-            // showLoaderOnConfirm: true,
-            // preConfirm: (login) => {
-            //     return fetch(`//api.github.com/users/${login}`)
-            //         .then(response => {
-            //             if (!response.ok) {
-            //                 throw new Error(response.statusText)
-            //             }
-            //             return response.json()
-            //         })
-            //         .catch(error => {
-            //             Swal.showValidationMessage(
-            //                 `Request failed: ${error}`
-            //             )
-            //         })
-            // },
-            // allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
             console.log(result);
-            if (result.dismiss === "backdrop" || result.dismiss === "close" || result.value === "") {
+            if (result.dismiss === "backdrop" || result.dismiss === "close" || result.dismiss === "cancel" || result.value === "") {
                 console.log("empty");
             } else {
                 $.post("/api/savenote/" + id, { newNote: result.value }, function (data) {
@@ -85,4 +72,21 @@ seeNotes.on("click", function (event) {
 
 
     
+})
+
+
+// delete note
+$(document.body).on("click", ".delete", function(event) {
+    var noteContent = $(this).parent().text();
+    var storyId = $(this).parent().parent().data("story-id");
+    var noteId = $(this).data("note-id");
+    var $clickedLi = $(this).parent();
+    console.log(noteId);
+    console.log(storyId);
+    // post request to update note in db
+    $.post("/api/notes", { storyId: storyId, noteId: noteId, noteContent: noteContent }, function (data) {
+        console.log(data);
+        // delete the li of the now deleted note
+        $clickedLi.remove();
+    })
 })

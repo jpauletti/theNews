@@ -15,5 +15,16 @@ ul {
 li {
     border: 1px dashed black;
     padding: 5px;
-    margin-bottom: 3px;
+    margin-bottom: 8px;
+}
+
+.swal2-content li {
+    position: relative;
+}
+
+.fa-times {
+    position: absolute;
+    right: 8px;
+    top: 6px;
+    cursor: pointer;
 }
