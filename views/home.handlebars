@@ -1,7 +1,7 @@
 <div class="jumbotron text-center">
     <h1 class="display-4 text-uppercase">Buzzfeed Scraper</h1>
-    <a class="btn btn-primary btn-lg" href="#" role="button" id="scrape-new">Scrape New Articles</a>
-    <a class="btn btn-primary btn-lg" href="#" role="button" id="clear-articles">Clear Articles</a>
+    {{!-- <a class="btn btn-primary btn-lg" href="#" role="button" id="scrape-new">Scrape New Articles</a> --}}
+    {{!-- <a class="btn btn-primary btn-lg" href="#" role="button" id="clear-articles">Clear Articles</a> --}}
 </div>
 
 
@@ -27,11 +27,19 @@
 {{#unless stories}}
     <div class="row text-center justify-content-center">
         <div class="col-md-6">
-            No stories yet....try scraping some now.
+            No stories yet....try scraping some now.<br><br>
+            <a href="#" id="scrapeNew">Scrape New Stories?</a>
         </div>
     </div>
 {{/unless}}
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script src="./js/homepage.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+<script src="./js/main.js"></script>

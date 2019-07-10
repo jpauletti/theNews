@@ -1,16 +1,40 @@
 var scrapeNew = $("#scrape-new");
 var clearArticles = $("#clear-articles");
-var saveStory = $(".saveStory")
+var saveStory = $(".saveStory");
+
+function loadNewStories() {
+    Swal.fire({
+        title: 'New stories loading...',
+        showCancelButton: false,
+        showConfirmButton: false,
+        showLoaderOnConfirm: false,
+        onBeforeOpen: () => {
+            Swal.showLoading()
+            $.get("/api/new-scrape", function (data) {
+                console.log("new scrape performed");
+                $(".swal2-title").text("Loaded!");
+                Swal.hideLoading();
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1500);
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+
+    })
+}
 
 // click scrape new articles button
 scrapeNew.on("click", function(event) {
     event.preventDefault();
+    loadNewStories();
+})
 
-    // get request for new scrape
-    $.get("/api/new-scrape", function (data) {
-        console.log("new scrape performed");
-        window.location.reload();
-    })
+// scrape new articles btn for empty page
+$("#scrapeNew").on("click", function (event) {
+    event.preventDefault();
+    loadNewStories();
 })
 
 

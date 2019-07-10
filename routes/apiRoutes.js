@@ -24,6 +24,7 @@ module.exports = function (app) {
 
     // new scrape call
     app.get("/api/new-scrape", function(req, res) {
+        console.log("getting stories now....");
 
         // scrape site
         axios.get("https://www.buzzfeed.com/").then(function (response) {
@@ -96,6 +97,18 @@ module.exports = function (app) {
         // find all info about story
         db.Story.findOneAndUpdate({ summary: summary }, { saved: false }).then(function (dbStory) {
             console.log("saved value updated");
+            res.json(true);
+        }).catch(function (err) {
+            if (err) console.log(err);
+        })
+    })
+
+
+    // clear all saved stories
+    app.get("/clear-saved", function (req, res) {
+        // change all stories to saved: false
+        db.Story.updateMany({}, { saved: false }).then(function (dbStory) {
+            console.log("no more saved stories");
             res.json(true);
         }).catch(function (err) {
             if (err) console.log(err);

@@ -1,11 +1,88 @@
+var scrapeNew = $("#scrape-new");
+var clearArticles = $("#clear-articles");
+var saveStory = $(".saveStory");
+
+function loadNewStories() {
+    Swal.fire({
+        title: 'New stories loading...',
+        showCancelButton: false,
+        showConfirmButton: false,
+        showLoaderOnConfirm: false,
+        onBeforeOpen: () => {
+            Swal.showLoading()
+            $.get("/api/new-scrape", function (data) {
+                console.log("new scrape performed");
+                $(".swal2-title").text("New stories loaded!");
+                Swal.hideLoading();
+                setTimeout(function () {
+                    window.location.replace("/");
+                }, 1500);
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+
+    })
+}
+
+// click scrape new articles button
+scrapeNew.on("click", function (event) {
+    event.preventDefault();
+    loadNewStories();
+})
+
+// scrape new articles btn for empty page
+$("#scrapeNew").on("click", function (event) {
+    event.preventDefault();
+    loadNewStories();
+})
+
+
+// click clear articles button
+clearArticles.on("click", function (event) {
+    event.preventDefault();
+
+    $.get("/clear", function (data) {
+        window.location.reload();
+    })
+})
+
+
+// click save story button
+saveStory.on("click", function (event) {
+    event.preventDefault();
+
+    var summary = $(this).prev().text();
+    console.log(summary);
+
+    // send summary for the story to be updated
+    $.post("/api/save", { summary: summary }, function (data) {
+        console.log(data);
+        // refesh page
+        window.location.reload();
+    })
+})
+
+
+
+
+
+
+
+
+
+
+// ================================================================================
+// SAVED PAGE
+// ================================================================================
+
 var removeFromSaved = $(".removeFromSaved");
 var seeNotes = $(".seeNotes");
 var deleteNote = $(".delete");
-var clearArticles = $("#clear-articles");
 var clearSaved = $("#clearSaved");
 
 // remove from saved stories
-removeFromSaved.on("click", function(event) {
+removeFromSaved.on("click", function (event) {
     console.log("remove")
     event.preventDefault();
 
@@ -73,12 +150,12 @@ seeNotes.on("click", function (event) {
     })
 
 
-    
+
 })
 
 
 // delete note
-$(document.body).on("click", ".delete", function(event) {
+$(document.body).on("click", ".delete", function (event) {
     var noteContent = $(this).parent().text();
     var storyId = $(this).parent().parent().data("story-id");
     var noteId = $(this).data("note-id");
@@ -93,19 +170,9 @@ $(document.body).on("click", ".delete", function(event) {
 
 
 
-// click clear articles button
-clearArticles.on("click", function (event) {
-    event.preventDefault();
-
-    $.get("/clear", function (data) {
-        window.location.reload();
-    })
-})
-
-
 // clear saved articles button
-clearSaved.on("click", function(event) {
-    $.get("/clear-saved", function(data) {
+clearSaved.on("click", function (event) {
+    $.get("/clear-saved", function (data) {
         window.location.reload();
     })
 })
