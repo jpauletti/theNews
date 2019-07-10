@@ -6,7 +6,7 @@
 
 
 {{#each stories}}
-<div class="card mb-3">
+<div class="card mb-3" data-story-id="{{this._id}}">
     <div class="row no-gutters">
         {{#if this.image}}
         <div class="col-md-4">
@@ -18,6 +18,7 @@
                 <a href="{{link}}" class="text-body" target="_blank"><h5 class="card-title">{{this.headline}}</h5></a>
                 <p class="card-text">{{this.summary}}</p>
                 <a href="#" class="btn btn-warning saveStory">Save Story</a>
+                <a href="#" class="btn btn-info seeNotes">Notes</a>
             </div>
         </div>
     </div>
