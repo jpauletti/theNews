@@ -12,6 +12,7 @@ function loadNewStories() {
             Swal.showLoading()
             $.get("/api/new-scrape", function (data) {
                 console.log("new scrape performed");
+                console.log(data);
                 $(".swal2-title").text("New stories loaded!");
                 Swal.hideLoading();
                 setTimeout(function () {

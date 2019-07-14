@@ -29,32 +29,33 @@ module.exports = function (app) {
         // scrape site
         axios.get("https://www.buzzfeed.com/").then(function (response) {
             var $ = cheerio.load(response.data);
-
             // get list of articles on homepage
             $('div[data-module="story-card"]').each(function (i, element) {
                 var result = {};
-
                 result.image = $(this).find(".card__image img").attr("src");
                 result.headline = $(this).find(".js-card__link.link-gray").text();
                 result.summary = $(this).find(".js-card__description").text();
                 result.link = $(this).find(".js-card__link").attr("href");
 
-                // if it doesn't already exist, create it (if no fields are null)
+                // make sure no fields are null
                 if (result.image && (result.image).indexOf("data:image/gif") === -1 && result.headline && result.summary && result.link) {
                     var query = result;
                     var update = {};
                     var options = { upsert: true, new: true, setDefaultsOnInsert: true };
+                    // does story already exist in db?
+                    // headline/titles and images seem to be changed out a lot on buzzfeed, but summary stays the same so search for that
                     db.Story.find({ summary: result.summary }).then(function (dbFind) {
-                        // console.log(dbFind);
-                        // console.log(dbFind.length);
-                        // console.log("did i find it?");
+                        // if not found, add to db
                         if (dbFind.length === 0) {
                             db.Story.findOneAndUpdate(query, update, options, function (err, data) {
                                 if (err) console.log(err);
+                                console.log(data);
                             });
+                            // if found, update the current story
                         } else {
                             db.Story.findOneAndUpdate({ summary: result.summary }, query, options, function (err, data) {
                                 if (err) console.log(err);
+                                console.log(data);
                             });
                         }
                     }).catch(function (err) {
@@ -62,9 +63,10 @@ module.exports = function (app) {
                     });
                 }
             })
-        }).then(function() {
             res.redirect("/");
-        });
+        }) //.then(function() {
+        //     res.redirect("/");
+        // });
     })
 
 

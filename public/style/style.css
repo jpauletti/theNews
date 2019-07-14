@@ -35,7 +35,7 @@ body {
     padding: .5rem 0rem;
 }
 
-.navbar-brand, .nav-link {
+.navbar-brand {
     color: #e32 !important;
 }
 
@@ -77,7 +77,7 @@ ul {
 }
 
 li {
-    border: 1px dashed black;
+    border: 1px rgba(0,0,0, 0.2) solid;
     padding: 5px;
     margin-bottom: 8px;
 }
